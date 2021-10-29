@@ -35,7 +35,7 @@ async function validateAction(req, res, next) {
     } else {
       next({
         status: 400,
-        message: "provide a valid project id, description, and notes",
+        message: "provide a valid project id",
       });
     }
   } catch (error) {
@@ -61,6 +61,7 @@ const actionSchema = yup.object().shape({
     .typeError("notes must be a string")
     .trim("whitespace aloen does not count")
     .required("notes is required"),
+  completed: yup.boolean().default(false),
 });
 
 module.exports = {

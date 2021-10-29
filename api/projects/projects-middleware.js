@@ -38,6 +38,7 @@ const projectSchema = yup.object().shape({
     .typeError("description must be a string")
     .trim("whitespace aloen does not count")
     .required("description is required"),
+  completed: yup.boolean().required(),
 });
 
 module.exports = {
