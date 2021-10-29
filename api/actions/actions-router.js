@@ -14,9 +14,11 @@ router.get("/", (req, res, next) => {
     })
     .catch(next);
 });
+
 router.get("/:id", checkActionId, (req, res) => {
   res.status(200).json(req.action);
 });
+
 router.post("/", validateAction, (req, res, next) => {
   Actions.insert(req.body)
     .then((action) => {
@@ -24,8 +26,22 @@ router.post("/", validateAction, (req, res, next) => {
     })
     .catch(next);
 });
-router.put("/:id", (req, res) => {});
-router.delete("/:id", (req, res) => {});
+
+router.put("/:id", validateAction, checkActionId, (req, res, next) => {
+  Actions.update(req.params.id, req.body)
+    .then((action) => {
+      res.status(200).json(action);
+    })
+    .catch(next);
+});
+
+router.delete("/:id", checkActionId, (req, res, next) => {
+  Actions.remove(req.params.id)
+    .then(() => {
+      next();
+    })
+    .catch(next);
+});
 
 router.use(handleErrors);
 

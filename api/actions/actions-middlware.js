@@ -33,7 +33,10 @@ async function validateAction(req, res, next) {
       req.body = validated;
       next();
     } else {
-      next({ status: 400, message: error.message });
+      next({
+        status: 400,
+        message: "provide a valid project id, description, and notes",
+      });
     }
   } catch (error) {
     next({ status: 400, message: error.message });
